@@ -1,5 +1,6 @@
-package com.github.catapan.ifood.register;
+package com.github.catapan.ifood.register.restaurant;
 
+import com.github.catapan.ifood.register.localization.Localization;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.util.Date;
 import javax.persistence.Entity;

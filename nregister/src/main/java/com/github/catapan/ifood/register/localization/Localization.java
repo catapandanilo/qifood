@@ -1,4 +1,4 @@
-package com.github.catapan.ifood.register;
+package com.github.catapan.ifood.register.localization;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
@@ -11,11 +11,11 @@ import javax.persistence.Table;
 @Table(name = "localization")
 public class Localization extends PanacheEntityBase {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  public Long id;
 
-    public Double latitude;
+  public Double latitude;
 
-    public Double longitude;
+  public Double longitude;
 }

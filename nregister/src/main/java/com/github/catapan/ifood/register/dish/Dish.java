@@ -1,5 +1,6 @@
-package com.github.catapan.ifood.register;
+package com.github.catapan.ifood.register.dish;
 
+import com.github.catapan.ifood.register.restaurant.Restaurant;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
