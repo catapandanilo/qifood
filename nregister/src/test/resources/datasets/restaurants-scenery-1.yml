@@ -1,0 +1,7 @@
+RESTAURANT:
+  - ID: 123
+    NAME: "New Restaurant"
+    OWNER: "ID do keyclock"
+  - ID: 234
+    NAME: "New Restaurant 2"
+    OWNER: "ID do keyclock 2"
