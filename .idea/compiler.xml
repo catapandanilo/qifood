@@ -6,14 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="nregister" />
         <module name="marketplace" />
         <module name="order" />
-        <module name="register" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="maven-t" target="11" />
-      <module name="register" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
