@@ -76,6 +76,42 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <artifactId>postgresql</artifactId>
+      <groupId>org.testcontainers</groupId>
+      <scope>test</scope>
+      <version>1.15.2</version>
+    </dependency>
+    <dependency>
+      <artifactId>rider-core</artifactId>
+      <groupId>com.github.database-rider</groupId>
+      <scope>test</scope>
+      <version>1.23.0</version>
+    </dependency>
+    <dependency>
+      <artifactId>rider-cdi</artifactId>
+      <groupId>com.github.database-rider</groupId>
+      <scope>test</scope>
+      <version>1.23.0</version>
+    </dependency>
+    <dependency>
+      <artifactId>stax</artifactId>
+      <groupId>stax</groupId>
+      <scope>test</scope>
+      <version>1.2.0</version>
+    </dependency>
+    <dependency>
+      <artifactId>approvaltests</artifactId>
+      <groupId>com.approvaltests</groupId>
+      <scope>test</scope>
+      <version>10.3.0</version>
+    </dependency>
+    <dependency>
+      <artifactId>gson</artifactId>
+      <groupId>com.google.code.gson</groupId>
+      <scope>test</scope>
+      <version>2.8.6</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
