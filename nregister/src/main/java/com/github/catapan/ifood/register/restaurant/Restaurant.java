@@ -3,11 +3,12 @@ package com.github.catapan.ifood.register.restaurant;
 import com.github.catapan.ifood.register.localization.Localization;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,7 +26,7 @@ public class Restaurant extends PanacheEntityBase {
 
     public String name;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     public Localization localization;
 
     @CreationTimestamp
