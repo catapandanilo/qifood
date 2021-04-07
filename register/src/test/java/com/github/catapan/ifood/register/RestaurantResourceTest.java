@@ -10,17 +10,27 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
 import io.restassured.specification.RequestSpecification;
 import javax.ws.rs.core.Response.Status;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.TokenUtils;
 
 @DBRider
 @DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
 @QuarkusTest
 @QuarkusTestResource(RegisterTestLifecycleManager.class)
 public class RestaurantResourceTest {
+
+  private String token;
+
+  @BeforeEach
+  public void generateToken() throws Exception {
+    token = TokenUtils.generateTokenString("/JWTOwnerClaims.json", null);
+  }
 
   @Test
   @DataSet("restaurants-scenery-1.yml")
@@ -34,7 +44,7 @@ public class RestaurantResourceTest {
   }
 
   private RequestSpecification given() {
-    return RestAssured.given().contentType(ContentType.JSON);
+    return RestAssured.given().contentType(ContentType.JSON).header(new Header("Authorization", "Bearer " + token));
   }
 
   @Test
