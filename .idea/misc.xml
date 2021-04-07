@@ -3,8 +3,8 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="Quarkus" url="file://$PROJECT_DIR$/marketplace" />
-    <file type="Quarkus" url="file://$PROJECT_DIR$/nregister" />
     <file type="Quarkus" url="file://$PROJECT_DIR$/order" />
+    <file type="Quarkus" url="file://$PROJECT_DIR$/register" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">

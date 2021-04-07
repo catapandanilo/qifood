@@ -1,12 +1,12 @@
 [
   {
+    "fantasyName": "New Restaurant",
     "id": 123,
-    "name": "New Restaurant",
     "owner": "ID do keyclock"
   },
   {
+    "fantasyName": "New Restaurant 2",
     "id": 234,
-    "name": "New Restaurant 2",
     "owner": "ID do keyclock 2"
   }
 ]

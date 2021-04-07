@@ -2,6 +2,7 @@ package com.github.catapan.ifood.register;
 
 import static io.restassured.RestAssured.given;
 
+import com.github.catapan.ifood.register.restaurant.DTO.UpdateRestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.Restaurant;
 import com.github.database.rider.cdi.api.DBRider;
 import com.github.database.rider.core.api.configuration.DBUnit;
@@ -43,12 +44,12 @@ public class RestaurantResourceTest {
   @Test
   @DataSet("restaurants-scenery-1.yml")
   public void testUpdateRestaurant() {
-    Restaurant dto = new Restaurant();
-    dto.name = "newName";
+    UpdateRestaurantDTO updateRestaurantDTO = new UpdateRestaurantDTO();
+    updateRestaurantDTO.fantasyName = "newName";
     Long parameterValue = 123L;
     given()
       .with().pathParam("id", parameterValue)
-      .body(dto)
+      .body(updateRestaurantDTO)
       .when().put("/restaurants/{id}")
       .then()
       .statusCode(Status.NO_CONTENT.getStatusCode())
@@ -56,6 +57,6 @@ public class RestaurantResourceTest {
 
     Restaurant findById = Restaurant.findById(parameterValue);
 
-    Assertions.assertEquals(dto.name, findById.name);
+    Assertions.assertEquals(updateRestaurantDTO.fantasyName, findById.name);
   }
 }

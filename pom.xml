@@ -11,7 +11,7 @@
     <modules>
         <module>marketplace</module>
         <module>order</module>
-        <module>nregister</module>
+        <module>register</module>
     </modules>
 
     <properties>
