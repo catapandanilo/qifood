@@ -1,9 +1,13 @@
 package com.github.catapan.ifood.register.restaurant;
 
 import com.github.catapan.ifood.register.restaurant.DTO.AddRestaurantDTO;
+import com.github.catapan.ifood.register.restaurant.DTO.RestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.DTO.RestaurantMapper;
+import com.github.catapan.ifood.register.restaurant.DTO.UpdateRestaurantDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -30,8 +34,10 @@ public class RestaurantResource {
   RestaurantMapper restaurantMapper;
 
   @GET
-  public List<Restaurant> getAll() {
-    return Restaurant.listAll();
+  public List<RestaurantDTO> getAll() {
+    Stream<Restaurant> restaurants = Restaurant.streamAll();
+    return restaurants.map(restaurant -> restaurantMapper.toRestaurantDTO(restaurant))
+      .collect(Collectors.toList());
   }
 
   @POST
@@ -45,15 +51,14 @@ public class RestaurantResource {
   @PUT
   @Path("{id}")
   @Transactional
-  public void update(@PathParam("id") Long id, Restaurant restaurant) {
+  public void update(@PathParam("id") Long id, UpdateRestaurantDTO updateRestaurantDTO) {
     Optional<Restaurant> restaurantOptional = Restaurant.findByIdOptional(id);
-
     if (restaurantOptional.isEmpty()) {
       throw new NotFoundException();
     }
 
     Restaurant restaurantUpdated = restaurantOptional.get();
-    restaurantUpdated.name = restaurant.name;
+    restaurantMapper.toRestaurant(updateRestaurantDTO, restaurantUpdated);
     restaurantUpdated.persist();
   }
 

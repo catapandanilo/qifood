@@ -33,5 +33,5 @@ public class Restaurant extends PanacheEntityBase {
     public Date dateCreation;
 
     @CreationTimestamp
-    public Date dataUpdate;
+    public Date dateUpdate;
 }

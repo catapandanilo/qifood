@@ -1,8 +1,16 @@
 package com.github.catapan.ifood.register.dish;
 
+import com.github.catapan.ifood.register.dish.DTO.AddDishDTO;
+import com.github.catapan.ifood.register.dish.DTO.DishDTO;
+import com.github.catapan.ifood.register.dish.DTO.DishMapper;
+import com.github.catapan.ifood.register.dish.DTO.UpdateDishDTO;
+import com.github.catapan.ifood.register.restaurant.DTO.RestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.Restaurant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -24,28 +32,29 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Tag(name = "Dish")
 public class DishResource {
 
+  @Inject
+  DishMapper dishMapper;
+
   @GET
-  public List<Restaurant> getAll(@PathParam("idRestaurant") Long idRestaurant) {
+  public List<DishDTO> getAll(@PathParam("idRestaurant") Long idRestaurant) {
     Optional<Restaurant> restaurantOptional = Restaurant.findByIdOptional(idRestaurant);
     if (restaurantOptional.isEmpty()) {
       throw new NotFoundException("Restaurant not exists");
     }
 
-    return Dish.list("restaurant", restaurantOptional.get());
+    Stream<Dish> dishes = Dish.stream("restaurant", restaurantOptional.get());
+    return dishes.map(dish -> dishMapper.toDTO(dish)).collect(Collectors.toList());
   }
 
   @POST
   @Transactional
-  public Response add(@PathParam("idRestaurant") Long idRestaurant, Dish dish) {
+  public Response add(@PathParam("idRestaurant") Long idRestaurant, AddDishDTO addDishDTO) {
     Optional<Restaurant> restaurantOptional = Restaurant.findByIdOptional(idRestaurant);
     if (restaurantOptional.isEmpty()) {
       throw new NotFoundException("Restaurant not exists");
     }
 
-    Dish dishUpdated = new Dish();
-    dishUpdated.name = dish.name;
-    dishUpdated.description = dish.description;
-    dishUpdated.price = dish.price;
+    Dish dishUpdated = dishMapper.toDish(addDishDTO);
     dishUpdated.restaurant = restaurantOptional.get();
     dishUpdated.persist();
 
@@ -56,7 +65,7 @@ public class DishResource {
   @Path("{id}")
   @Transactional
   public void update(@PathParam("idRestaurant") Long idRestaurant, @PathParam("id") Long id,
-    Dish dish) {
+    UpdateDishDTO updateDishDTO) {
     Optional<Restaurant> restaurantOptional = Restaurant.findByIdOptional(idRestaurant);
     if (restaurantOptional.isEmpty()) {
       throw new NotFoundException("Restaurant not exists");
@@ -68,7 +77,7 @@ public class DishResource {
     }
 
     Dish dishUpdated = dishOptional.get();
-    dishUpdated.price = dish.price;
+    dishMapper.toDish(updateDishDTO, dishUpdated);
     dishUpdated.persist();
   }
 
