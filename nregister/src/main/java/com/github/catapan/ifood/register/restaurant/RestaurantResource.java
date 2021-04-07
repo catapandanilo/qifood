@@ -1,7 +1,10 @@
 package com.github.catapan.ifood.register.restaurant;
 
+import com.github.catapan.ifood.register.restaurant.DTO.AddRestaurantDTO;
+import com.github.catapan.ifood.register.restaurant.DTO.RestaurantMapper;
 import java.util.List;
 import java.util.Optional;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,6 +26,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Tag(name = "Restaurant")
 public class RestaurantResource {
 
+  @Inject
+  RestaurantMapper restaurantMapper;
+
   @GET
   public List<Restaurant> getAll() {
     return Restaurant.listAll();
@@ -30,7 +36,8 @@ public class RestaurantResource {
 
   @POST
   @Transactional
-  public Response add(Restaurant restaurant) {
+  public Response add(AddRestaurantDTO addRestaurantDTO) {
+    Restaurant restaurant = restaurantMapper.toRestaurant(addRestaurantDTO);
     restaurant.persist();
     return Response.status(Status.CREATED).build();
   }
