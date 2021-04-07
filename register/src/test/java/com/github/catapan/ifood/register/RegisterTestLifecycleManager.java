@@ -1,11 +1,9 @@
 package com.github.catapan.ifood.register;
 
+import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.testcontainers.containers.PostgreSQLContainer;
-
-import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 public class RegisterTestLifecycleManager implements QuarkusTestResourceLifecycleManager {
 

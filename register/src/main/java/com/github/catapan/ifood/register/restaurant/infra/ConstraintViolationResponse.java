@@ -2,7 +2,6 @@ package com.github.catapan.ifood.register.restaurant.infra;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.ConstraintViolationException;
 
 public class ConstraintViolationResponse {

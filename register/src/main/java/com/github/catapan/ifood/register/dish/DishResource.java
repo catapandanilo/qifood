@@ -4,7 +4,6 @@ import com.github.catapan.ifood.register.dish.DTO.AddDishDTO;
 import com.github.catapan.ifood.register.dish.DTO.DishDTO;
 import com.github.catapan.ifood.register.dish.DTO.DishMapper;
 import com.github.catapan.ifood.register.dish.DTO.UpdateDishDTO;
-import com.github.catapan.ifood.register.restaurant.DTO.RestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.Restaurant;
 import java.util.List;
 import java.util.Optional;

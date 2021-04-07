@@ -1,24 +1,20 @@
 package com.github.catapan.ifood.register;
 
-import static io.restassured.RestAssured.given;
-
 import com.github.catapan.ifood.register.restaurant.DTO.UpdateRestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.Restaurant;
 import com.github.database.rider.cdi.api.DBRider;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.configuration.Orthography;
 import com.github.database.rider.core.api.dataset.DataSet;
+import io.quarkus.test.common.QuarkusTestResource;
+import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import io.quarkus.test.common.QuarkusTestResource;
-import io.quarkus.test.junit.QuarkusTest;
 import javax.ws.rs.core.Response.Status;
 import org.approvaltests.Approvals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @DBRider
 @DBUnit(caseInsensitiveStrategy = Orthography.LOWERCASE)
