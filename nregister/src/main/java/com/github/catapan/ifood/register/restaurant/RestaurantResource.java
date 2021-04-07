@@ -4,12 +4,14 @@ import com.github.catapan.ifood.register.restaurant.DTO.AddRestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.DTO.RestaurantDTO;
 import com.github.catapan.ifood.register.restaurant.DTO.RestaurantMapper;
 import com.github.catapan.ifood.register.restaurant.DTO.UpdateRestaurantDTO;
+import com.github.catapan.ifood.register.restaurant.infra.ConstraintViolationResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +24,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @Path("/restaurants")
@@ -42,7 +47,9 @@ public class RestaurantResource {
 
   @POST
   @Transactional
-  public Response add(AddRestaurantDTO addRestaurantDTO) {
+  @APIResponse(responseCode = "201", description = "When the restaurant is successfully registered")
+  @APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
+  public Response add(@Valid AddRestaurantDTO addRestaurantDTO) {
     Restaurant restaurant = restaurantMapper.toRestaurant(addRestaurantDTO);
     restaurant.persist();
     return Response.status(Status.CREATED).build();
