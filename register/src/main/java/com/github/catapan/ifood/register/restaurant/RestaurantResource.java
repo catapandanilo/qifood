@@ -25,6 +25,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
+import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -48,6 +53,23 @@ public class RestaurantResource {
   RestaurantMapper restaurantMapper;
 
   @GET
+  @Counted(
+	name = "getAll/Counted",
+	description = "Quantity searches restaurants"
+)
+  @SimplyTimed(
+	name = "getAll/SimplyTimed",
+	description = "Simple time to searches"
+)
+  @Timed(
+	name = "getAll/Timed",
+	description = "Complete time to searches"
+)
+  @Gauge(
+	name = "getAll/Gauge",
+	description = "Gauge description",
+	unit = MetricUnits.KILOBYTES
+)
   public List<RestaurantDTO> getAll() {
     Stream<Restaurant> restaurants = Restaurant.streamAll();
     return restaurants.map(restaurant -> restaurantMapper.toRestaurantDTO(restaurant))
