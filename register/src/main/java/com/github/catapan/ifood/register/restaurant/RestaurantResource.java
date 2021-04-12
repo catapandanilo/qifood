@@ -43,7 +43,7 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @Path("/restaurants")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@RolesAllowed("owner")
+//@RolesAllowed("owner")
 @Tag(name = "Restaurant")
 @SecurityScheme(securitySchemeName = "ifood-oauth", type = SecuritySchemeType.OAUTH2, flows = @OAuthFlows(password = @OAuthFlow(tokenUrl = "http://localhost:8180/auth/realms/ifood/protocol/openid-connect/token")))
 @SecurityRequirement(name = "ifood-oauth", scopes = {})
