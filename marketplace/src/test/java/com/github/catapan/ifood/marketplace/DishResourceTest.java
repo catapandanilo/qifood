@@ -7,15 +7,15 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
-public class ExampleResourceTest {
+public class DishResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
-        given()
-          .when().get("/marketplace")
+    public void dishHelloEndpoint() {
+        String body = given()
+          .when().get("/dishes")
           .then()
-             .statusCode(200)
-             .body(is("Hello RESTEasy"));
+          .statusCode(200).extract().asString();
+        System.out.println(body);
     }
 
 }
