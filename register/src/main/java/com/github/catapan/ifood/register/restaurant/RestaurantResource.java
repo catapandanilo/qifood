@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -25,9 +24,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
-import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
@@ -39,6 +36,8 @@ import org.eclipse.microprofile.openapi.annotations.security.OAuthFlows;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 @Path("/restaurants")
 @Produces(MediaType.APPLICATION_JSON)
@@ -51,6 +50,10 @@ public class RestaurantResource {
 
   @Inject
   RestaurantMapper restaurantMapper;
+
+  @Inject
+  @Channel("restaurants")
+  Emitter<Restaurant> emitter;
 
   @GET
   @Counted(
@@ -65,11 +68,6 @@ public class RestaurantResource {
 	name = "getAll/Timed",
 	description = "Complete time to searches"
 )
-  @Gauge(
-	name = "getAll/Gauge",
-	description = "Gauge description",
-	unit = MetricUnits.KILOBYTES
-)
   public List<RestaurantDTO> getAll() {
     Stream<Restaurant> restaurants = Restaurant.streamAll();
     return restaurants.map(restaurant -> restaurantMapper.toRestaurantDTO(restaurant))
@@ -83,6 +81,11 @@ public class RestaurantResource {
   public Response add(@Valid AddRestaurantDTO addRestaurantDTO) {
     Restaurant restaurant = restaurantMapper.toRestaurant(addRestaurantDTO);
     restaurant.persist();
+
+//    Jsonb create = JsonbBuilder.create();
+//    String json = create.toJson(restaurant);
+    emitter.send(restaurant);
+
     return Response.status(Status.CREATED).build();
   }
 
