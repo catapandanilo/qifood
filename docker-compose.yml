@@ -58,3 +58,13 @@ services:
     environment:
       ARTEMIS_USERNAME: admin
       ARTEMIS_PASSWORD: admin
+
+  mongodb_ifood:
+    container_name: mongodb_ifood
+    image: mongo:4.4.5
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: order
+      MONGO_INITDB_ROOT_PASSWORD: order
+      MONGO_INITDB_DATABASE: order
