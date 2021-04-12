@@ -8,6 +8,7 @@ services:
       POSTGRES_PASSWORD: register
     ports:
       - "5432:5432"
+
   postgres_marketplace:
     container_name: postgres_marketplace_ifood
     image: postgres:12.2
@@ -16,6 +17,7 @@ services:
       POSTGRES_PASSWORD: marketplace
     ports:
       - "5433:5432"
+
   keycloak_ifood:
     container_name: keycloak_ifood
     image: jboss/keycloak:12.0.4
@@ -25,6 +27,7 @@ services:
       KEYCLOAK_PASSWORD: admin
     ports:
       - "8180:8080"
+
   jaeger_ifood:
     container_name: jaeger_ifood
     image: jaegertracing/all-in-one:1.22
@@ -37,11 +40,21 @@ services:
       - "14268:14268"
       - "14250:14250"
       - "9411:9411"
+
   prometheus_ifood:
     container_name: prometheus_ifood
     image: prometheus-ifood
     network_mode: "host"
+
   grafana_ifood:
     container_name: grafana_ifood
     image: grafana/grafana:7.5.3
     network_mode: "host"
+
+  artemis_ifood:
+    container_name: artemis_ifood
+    image: vromero/activemq-artemis:2.16.0
+    network_mode: "host"
+    environment:
+      ARTEMIS_USERNAME: admin
+      ARTEMIS_PASSWORD: admin
