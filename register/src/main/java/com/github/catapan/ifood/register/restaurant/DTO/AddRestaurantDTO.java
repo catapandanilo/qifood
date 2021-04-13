@@ -11,10 +11,6 @@ import javax.validation.constraints.Size;
 
 public class AddRestaurantDTO implements DTO {
 
-  @NotEmpty
-  @NotNull
-  public String owner;
-
   @Pattern(regexp = "[0-9]{2}\\.[0-9]{3}\\.[0-9]{3}\\/[0-9]{4}\\-[0-9]{2}")
   @NotNull
   public String cnpj;

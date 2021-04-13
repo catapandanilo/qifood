@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -24,6 +25,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import org.eclipse.microprofile.jwt.Claim;
+import org.eclipse.microprofile.jwt.Claims;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -55,6 +59,13 @@ public class RestaurantResource {
   @Channel("restaurants")
   Emitter<Restaurant> emitter;
 
+  @Inject
+  JsonWebToken jwt;
+
+  @Inject
+  @Claim(standard = Claims.sub)
+  String sub;
+
   @GET
   @Counted(
 	name = "getAll/Counted",
@@ -80,6 +91,7 @@ public class RestaurantResource {
   @APIResponse(responseCode = "400", content = @Content(schema = @Schema(allOf = ConstraintViolationResponse.class)))
   public Response add(@Valid AddRestaurantDTO addRestaurantDTO) {
     Restaurant restaurant = restaurantMapper.toRestaurant(addRestaurantDTO);
+    restaurant.owner = sub;
     restaurant.persist();
 
 //    Jsonb create = JsonbBuilder.create();
@@ -99,6 +111,11 @@ public class RestaurantResource {
     }
 
     Restaurant restaurantUpdated = restaurantOptional.get();
+
+    if (!restaurantUpdated.owner.equals(sub)) {
+      throw new ForbiddenException();
+    }
+
     restaurantMapper.toRestaurant(updateRestaurantDTO, restaurantUpdated);
     restaurantUpdated.persist();
   }
