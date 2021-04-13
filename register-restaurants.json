@@ -1,0 +1,13 @@
+{
+  "name": "restaurant-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.hostname": "postgres_register",
+    "database.port": "5432",
+    "database.user": "register",
+    "database.password": "register",
+    "database.dbname" : "postgres",
+    "database.server.name": "database-register-1",
+    "table.include.list": "public.inventory"
+  }
+}
