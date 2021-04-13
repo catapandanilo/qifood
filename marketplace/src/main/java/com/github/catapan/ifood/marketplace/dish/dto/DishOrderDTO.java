@@ -1,4 +1,4 @@
-package com.github.catapan.ifood.marketplace.dish;
+package com.github.catapan.ifood.marketplace.dish.dto;
 
 import java.math.BigDecimal;
 

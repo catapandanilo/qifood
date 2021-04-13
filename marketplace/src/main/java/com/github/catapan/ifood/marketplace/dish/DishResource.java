@@ -1,5 +1,6 @@
 package com.github.catapan.ifood.marketplace.dish;
 
+import com.github.catapan.ifood.marketplace.dish.dto.DishDTO;
 import io.smallrye.mutiny.Multi;
 import io.vertx.mutiny.pgclient.PgPool;
 import javax.inject.Inject;

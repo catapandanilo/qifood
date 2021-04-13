@@ -1,9 +1,11 @@
 package com.github.catapan.ifood.marketplace;
 
 import com.github.catapan.ifood.marketplace.dish.Dish;
-import com.github.catapan.ifood.marketplace.dish.DishDTO;
-import com.github.catapan.ifood.marketplace.dish.DishOrderDTO;
-import com.github.catapan.ifood.marketplace.restaurant.RestaurantDTO;
+import com.github.catapan.ifood.marketplace.dish.dto.DishDTO;
+import com.github.catapan.ifood.marketplace.dish.dto.DishOrderDTO;
+import com.github.catapan.ifood.marketplace.dish.DishCart;
+import com.github.catapan.ifood.marketplace.dish.dto.DishOrderRealizedDTO;
+import com.github.catapan.ifood.marketplace.restaurant.dto.RestaurantDTO;
 import io.smallrye.mutiny.Uni;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 @Path("cart")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ShoppingCart {
+public class ShoppingCartResource {
 
     private static final String CLIENT = "a";
 
@@ -30,7 +32,7 @@ public class ShoppingCart {
 
     @Inject
     @Channel("orders")
-    Emitter<OrderRealizedDTO> emitterOrder;
+    Emitter<DishOrderRealizedDTO> emitterOrder;
 
     @GET
     public Uni<List<DishCart>> getCart() {
@@ -51,7 +53,7 @@ public class ShoppingCart {
     @POST
     @Path("/close-order")
     public Uni<Boolean> closeOrder() {
-        OrderRealizedDTO order = new OrderRealizedDTO();
+        DishOrderRealizedDTO order = new DishOrderRealizedDTO();
         String client = CLIENT;
         order.client = client;
         List<DishCart> dishCarts = DishCart.findCart(pgPool, client).await().indefinitely();

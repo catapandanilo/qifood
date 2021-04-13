@@ -1,5 +1,6 @@
 package com.github.catapan.ifood.marketplace.dish;
 
+import com.github.catapan.ifood.marketplace.dish.dto.DishDTO;
 import com.github.catapan.ifood.marketplace.restaurant.Restaurant;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
