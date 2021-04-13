@@ -6,12 +6,16 @@ import com.github.catapan.ifood.order.dish.DishOrderRealizedDTO;
 import com.github.catapan.ifood.order.restaurant.Restaurant;
 import java.util.ArrayList;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.bind.JsonbBuilder;
 import org.bson.types.Decimal128;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
 @ApplicationScoped
 public class OrderRealizedIncoming  {
+
+    @Inject
+    ElasticSearchService elasticSearchService;
 
     @Incoming("orders")
     public void readOrders(DishOrderRealizedDTO dto) {
@@ -25,9 +29,11 @@ public class OrderRealizedIncoming  {
         Restaurant restaurant = new Restaurant();
         restaurant.name = dto.restaurant.name;
         order.restaurant = restaurant;
-        String json = JsonbBuilder.create().toJson(dto);
-        order.persist();
 
+        String json = JsonbBuilder.create().toJson(dto);
+        elasticSearchService.index("orders", json);
+
+        order.persist();
     }
 
     private Dish from(DishOrderDTO dish) {
