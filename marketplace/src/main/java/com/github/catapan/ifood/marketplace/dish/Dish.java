@@ -41,4 +41,10 @@ public class Dish {
           }))
           .onItem().apply(DishDTO::from);
     }
+
+    public static Uni<DishDTO> findById(PgPool client, Long id) {
+        return client.preparedQuery("SELECT * FROM dish WHERE id = $1").execute(Tuple.of(id))
+            .map(RowSet::iterator)
+            .map(iterator -> iterator.hasNext() ? DishDTO.from(iterator.next()) : null);
+    }
 }
