@@ -47,6 +47,7 @@
         <module>order</module>
         <module>register</module>
         <module>command-mode</module>
+        <module>picocli</module>
     </modules>
 
 </project>

@@ -2,23 +2,12 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>command-mode</artifactId>
   <parent>
     <groupId>com.github.catapan.ifood</groupId>
     <artifactId>ifood</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.quarkus</groupId>
-        <artifactId>quarkus-bom</artifactId>
-        <version>1.13.0.Final</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <artifactId>picocli</artifactId>
   <dependencies>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -44,7 +33,7 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+      <artifactId>quarkus-picocli</artifactId>
     </dependency>
   </dependencies>
   <build>
