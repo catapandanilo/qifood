@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="marketplace" />
         <module name="order" />
+        <module name="register" />
+        <module name="command-mode" />
       </profile>
       <profile name="Annotation profile for ifood" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />

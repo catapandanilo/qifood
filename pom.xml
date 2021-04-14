@@ -46,6 +46,7 @@
         <module>marketplace</module>
         <module>order</module>
         <module>register</module>
+        <module>command-mode</module>
     </modules>
 
 </project>
